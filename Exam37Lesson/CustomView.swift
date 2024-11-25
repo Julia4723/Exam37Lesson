@@ -11,18 +11,18 @@ class CustomView : UIView {
     
     var action: ((String) -> ())?
     
-    private let titleLabel = UILabel()
+    
+    private let nameLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
     private let image = UIImageView()
     
-    private var model: Param?
+    private var models: Model?
     
-    init(model: Param) {
+    init(models: Model) {
         super.init(frame: .zero)
-        self.model = model
-        setup(models: model)
-        
+        self.models = models
+        setup(models: models)
     }
     
     
@@ -32,30 +32,30 @@ class CustomView : UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        action?(model?.description ?? "")
+        action?(models?.category ?? "")
     }
     
-    func configure(with model: Param) {
-        
-        titleLabel.text = model.description
-        descriptionLabel.text = model.description
-        priceLabel.text = model.price
-        image.image = UIImage(named: model.imageName)
+    func configure(with models: [Model]) {
+        for model in models {
+           //nameLabel.text = model.param.title
+            //descriptionLabel.text = model.param.description
+            //priceLabel.text = model.param.price
+        }
     }
 }
 
 
 private extension CustomView {
     
-    func setup(models: Param) {
+    func setup(models: Model) {
         widthAnchor.constraint(equalToConstant: 200).isActive = true
         heightAnchor.constraint(equalToConstant: 200).isActive = true
         backgroundColor = .systemBlue
         
-        titleLabel.text = models.description
-        descriptionLabel.text = models.description
-        priceLabel.text = models.price
-        image.image = UIImage(named: models.imageName)
+//        titleLabel.text = models.description
+//        descriptionLabel.text = models.description
+//        priceLabel.text = models.price
+//        image.image = UIImage(named: models.imageName)
         
         addSubviews()
         
@@ -67,14 +67,14 @@ private extension CustomView {
     }
     
     func addSubviews() {
-        [titleLabel, descriptionLabel, priceLabel, image].forEach { view in
+        [nameLabel, descriptionLabel, priceLabel, image].forEach { view in
             addSubview(view)
         }
     }
     
     func setupTitleLabel() {
-        titleLabel.font = .boldSystemFont(ofSize: 20)
-        titleLabel.textColor = .black
+        nameLabel.font = .boldSystemFont(ofSize: 20)
+        nameLabel.textColor = .black
     }
     
     func setupDescriptionLabel() {
@@ -93,13 +93,12 @@ private extension CustomView {
         image.heightAnchor.constraint(equalToConstant: 100).isActive = true
         image.contentMode = .scaleAspectFill
     }
-    
 }
 
 
 private extension CustomView {
     func setupLayout() {
-        [titleLabel, descriptionLabel, priceLabel, image].forEach { view in
+        [nameLabel, descriptionLabel, priceLabel, image].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -107,15 +106,15 @@ private extension CustomView {
             image.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             image.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             
-            titleLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            nameLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: -8),
+            nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            descriptionLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            descriptionLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
             
-            priceLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            priceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
         ])
     }

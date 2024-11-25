@@ -16,6 +16,7 @@ struct Model {
 
 
 struct Param: Equatable {
+    let title: String
     let description: String
     let price: String
     let imageName: String

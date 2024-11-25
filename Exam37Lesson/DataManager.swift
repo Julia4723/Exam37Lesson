@@ -37,19 +37,19 @@ extension DataManager {
                 id: 0,
                 category: "One",
                 param: [
-                    Param(description: "OneOne", price: "433", imageName: "One"),
-                    Param(description: "hgh", price: "767", imageName: "jhjh")
+                    Param(title: "OneTitle", description: "OneOne", price: "433", imageName: "One"),
+                    Param(title: "OneTitle", description: "hgh", price: "767", imageName: "jhjh")
                 ]
             ),
             Model(
                 id: 1,
                 category: "Two",
-                param: [Param(description: "TwoTwo", price: "433", imageName: "Two")]
+                param: [Param(title: "TwoTitle", description: "TwoTwo", price: "433", imageName: "Two")]
             ),
             Model(
                 id: 2,
                 category: "Three",
-                param: [Param(description: "OneOne", price: "433", imageName: "One")]
+                param: [Param(title: "ThreeTitle", description: "OneOne", price: "433", imageName: "One")]
             ),
         ]
     }

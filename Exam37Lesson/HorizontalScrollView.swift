@@ -24,12 +24,12 @@ class HorizontalScrollView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with models: [Param]) {
-        for model in models {
-            let view = CustomView(model: model)
+    func configure(with models: Model) {
+    //for model in models {
+        let view = CustomView(models: models)
             view.action = tapView
             stackView.addArrangedSubview(view)
-        }
+        //}
     }
     private func tapView(_ title: String) {
         action?(title)
@@ -46,7 +46,6 @@ private extension HorizontalScrollView {
         addSubview(scrollView) //добавляем на вью скролл
         
         setupStackView()
-        
     }
     
     func setupStackView() {

@@ -27,9 +27,11 @@ class CustomCell: UITableViewCell {
     }
     
     
-    func configure ( models: Model) {
+    func configure (models: Model) {
+        //for model in models {
         label.text = models.category
-        
+       // }
+        horizontalScrollView.configure(with: models)
     }
 }
 
