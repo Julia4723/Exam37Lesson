@@ -9,13 +9,14 @@
 import UIKit
 
 struct Model {
-    let id: Int
+    
     let category: String
     let param: [Param]
 }
 
 
 struct Param: Equatable {
+    let id: String
     let title: String
     let description: String
     let price: String

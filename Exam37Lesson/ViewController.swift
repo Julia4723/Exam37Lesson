@@ -9,32 +9,21 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
     var dataManager: IDataManager!
-    
     private let celIdentifier = "CellIdentifier"
-    private let horizontalScrollView = HorizontalScrollView()
-    
     private let tableView = UITableView()
-    
+    var array = [Param]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        horizontalScrollView.configure(with: dataManager.getModel())
-        horizontalScrollView.action = presentDetailsVC
-        view.addSubview(horizontalScrollView)
         view.addSubview(tableView)
         setupLayout()
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
         tableView.register(CustomCell.self, forCellReuseIdentifier: celIdentifier)
     }
-    
-    private func presentDetailsVC(title: String) {
-        guard let model = getModels(title: title) else {return}
-        let detailsVC = DetailsVC()
-        detailsVC.configure(model: model)
-        present(detailsVC, animated: true)
-    }
+
     
     private func getModels(title: String) -> Model? {
         for model in dataManager.getModel() {
@@ -43,13 +32,12 @@ class ViewController: UIViewController {
                 return model
             }
         }
-        
         return nil
     }
 }
 
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataManager.getModel().count
@@ -62,6 +50,25 @@ extension ViewController: UITableViewDataSource {
         
         let modelElement = dataManager.getModel()[indexPath.row]
         
+        cell.action = { id in
+            if let foundItem = self.dataManager.findIndex(id) {
+                let detailsVC = DetailsVC()
+                detailsVC.configure(model: foundItem)
+                self.present(detailsVC, animated: true)
+            }
+        }
+//        
+//        cell.action = { id in
+//
+//            if let foundItem = self.dataManager.find(id, array: allParams) {
+//                let detailsVC = DetailsVC()
+//                detailsVC.configure(model: foundItem)
+//                self.present(detailsVC, animated: true)
+//            }
+//        }
+        
+        
+        cell.selectionStyle = .none
         cell.configure(models: modelElement)
         return cell
     }
@@ -71,15 +78,9 @@ extension ViewController: UITableViewDataSource {
 extension ViewController {
     private func setupLayout() {
         
-        horizontalScrollView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            horizontalScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            horizontalScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            horizontalScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            horizontalScrollView.heightAnchor.constraint(equalToConstant: 300),
             
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

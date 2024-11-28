@@ -12,8 +12,10 @@ class CustomCell: UITableViewCell {
     private let horizontalScrollView = HorizontalScrollView()
     private let label = UILabel()
     
-    var action: ((String) -> ())?
     
+    private var param: Param?
+    var action: ((String) -> ())?
+   
     private let scrollView = UIScrollView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String? ) {
@@ -28,10 +30,15 @@ class CustomCell: UITableViewCell {
     
     
     func configure (models: Model) {
-        //for model in models {
         label.text = models.category
-       // }
-        horizontalScrollView.configure(with: models)
+        horizontalScrollView.configure(with: models.param)
+    }
+   
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        print("нажатие в CustomCell")
+        action?(param?.id ?? "")
+        
     }
 }
 
@@ -39,10 +46,15 @@ class CustomCell: UITableViewCell {
 
 private extension CustomCell {
     func setup() {
-        backgroundColor = .systemCyan
+        backgroundColor = .systemGray6
         contentView.addSubview(label)
         contentView.addSubview(horizontalScrollView)
+        setupLabel()
         setupLayout()
+    }
+    
+    func setupLabel() {
+        label.font = .systemFont(ofSize: 20, weight: .medium)
     }
 }
 
@@ -51,21 +63,20 @@ private extension CustomCell {
 private extension CustomCell {
     func setupLayout() {
         horizontalScrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
-            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            label.heightAnchor.constraint(equalToConstant: 50),
+            label.heightAnchor.constraint(equalToConstant: 30),
             
             horizontalScrollView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
             horizontalScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             horizontalScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            horizontalScrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            horizontalScrollView.heightAnchor.constraint(equalToConstant: 200)
+            horizontalScrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            horizontalScrollView.heightAnchor.constraint(equalToConstant: 180)
         ])
     }
 }

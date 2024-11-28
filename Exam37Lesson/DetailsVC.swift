@@ -7,6 +7,9 @@
 import UIKit
 
 class DetailsVC: UIViewController {
+    
+    
+    
     private let label = UILabel()
     
     override func viewDidLoad() {
@@ -18,8 +21,8 @@ class DetailsVC: UIViewController {
         
     }
     
-    func configure(model: Model?) {
-        label.text = model?.category
+    func configure(model: Param?) {
+        label.text = model?.title
     }
 }
 

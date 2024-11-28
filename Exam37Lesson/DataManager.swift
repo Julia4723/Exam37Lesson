@@ -9,23 +9,35 @@ import UIKit
 
 protocol IDataManager {
     func getModel() -> [Model]
-    
+    func findIndex(_ item: String) -> Param?
+    //func find(_ id: String, array: [Param]) -> Param?
 }
 
 class DataManager: IDataManager {
     
-    
     private var models: [Model] = []
     
     
-    func findElement(id: Int) -> Model? {
-        for element in models {
-            if id == element.id {
-                return element
+    
+        func findIndex(_ item: String) -> Param? {
+            for model in models {
+                if let index = model.param.first(where: { $0.id == item }) {
+                    print("элемент найден")
+                    return index
+                }
             }
+            return nil
         }
-        return nil
-    }
+    
+//    func find(_ id: String, array: [Param]) -> Param? {
+//        for model in array {
+//            if model.id == id {
+//                return model
+//            }
+//        }
+//        return nil
+//    }
+    
 }
 
 
@@ -34,22 +46,30 @@ extension DataManager {
     func getModel() -> [Model] {
         [
             Model(
-                id: 0,
-                category: "One",
+                category: "One Category",
                 param: [
-                    Param(title: "OneTitle", description: "OneOne", price: "433", imageName: "One"),
-                    Param(title: "OneTitle", description: "hgh", price: "767", imageName: "jhjh")
+                    Param(id: "0", title: "Milk", description: "Milk", price: "100", imageName: "Milk"),
+                    Param(id: "1",title: "Bread", description: "Bread", price: "120", imageName: "Bread"),
+                    Param(id: "2",title: "Eggs", description: "Eggs", price: "124", imageName: "Eggs"),
+                    Param(id: "3",title: "Cheese", description: "Cheese", price: "200", imageName: "Cheese"),
+                    Param(id: "2", title: "Butter", description: "Butter", price: "300", imageName: "Butter")
                 ]
             ),
             Model(
-                id: 1,
-                category: "Two",
-                param: [Param(title: "TwoTitle", description: "TwoTwo", price: "433", imageName: "Two")]
+                category: "Two Category",
+                param: [
+                    Param(id: "2", title: "Rice", description: "Rice", price: "130", imageName: "Rice"),
+                    Param(id: "2", title: "Pasta", description: "Pasta", price: "130", imageName: "Pasta"),
+                    Param(id: "2", title: "Tomatoes", description: "Tomatoes", price: "140", imageName: "Tomatoes"),
+                ]
             ),
             Model(
-                id: 2,
-                category: "Three",
-                param: [Param(title: "ThreeTitle", description: "OneOne", price: "433", imageName: "One")]
+                category: "Three Category",
+                param: [
+                    Param(id: "3", title: "Chicken", description: "Chicken", price: "300", imageName: "Chicken"),
+                    Param(id: "3", title: "Beef", description: "Beef", price: "300", imageName: "Beef"),
+                ]
+                
             ),
         ]
     }

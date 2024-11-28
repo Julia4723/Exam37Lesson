@@ -24,14 +24,16 @@ class HorizontalScrollView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with models: Model) {
-    //for model in models {
-        let view = CustomView(models: models)
+    func configure(with params: [Param]) {
+        for param in params {
+            let view = CustomView(param: param)
+            view.configure(with: param)
             view.action = tapView
             stackView.addArrangedSubview(view)
-        //}
+        }
     }
     private func tapView(_ title: String) {
+        print("нажатие в HorizontalScrollView: \(title)")
         action?(title)
     }
 }
@@ -41,7 +43,6 @@ class HorizontalScrollView: UIView {
 private extension HorizontalScrollView {
     
     func setupView() {
-        
         scrollView.addSubview(stackView) //добавляем стек на скролл
         addSubview(scrollView) //добавляем на вью скролл
         
@@ -64,7 +65,7 @@ private extension HorizontalScrollView {
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+            stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor),
             stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),

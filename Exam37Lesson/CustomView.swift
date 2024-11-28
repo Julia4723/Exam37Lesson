@@ -11,18 +11,18 @@ class CustomView : UIView {
     
     var action: ((String) -> ())?
     
-    
     private let nameLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
     private let image = UIImageView()
     
-    private var models: Model?
+    private var param: Param?
+   
     
-    init(models: Model) {
+    init(param: Param) {
         super.init(frame: .zero)
-        self.models = models
-        setup(models: models)
+        self.param = param
+        setup(param: param)
     }
     
     
@@ -32,34 +32,32 @@ class CustomView : UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        action?(models?.category ?? "")
+        print("нажатие в CustomView: \(param?.id)")
+        action?(param?.id ?? "")
+        
     }
     
-    func configure(with models: [Model]) {
-        for model in models {
-           //nameLabel.text = model.param.title
-            //descriptionLabel.text = model.param.description
-            //priceLabel.text = model.param.price
-        }
+    func configure(with params: Param) {
+        nameLabel.text = params.title
+        descriptionLabel.text = params.description
+        priceLabel.text = params.price
+        image.image = UIImage(named: params.imageName)
     }
 }
 
 
 private extension CustomView {
     
-    func setup(models: Model) {
-        widthAnchor.constraint(equalToConstant: 200).isActive = true
-        heightAnchor.constraint(equalToConstant: 200).isActive = true
-        backgroundColor = .systemBlue
+    func setup(param: Param) {
+        widthAnchor.constraint(equalToConstant: 270).isActive = true
+        heightAnchor.constraint(equalToConstant: 140).isActive = true
         
-//        titleLabel.text = models.description
-//        descriptionLabel.text = models.description
-//        priceLabel.text = models.price
-//        image.image = UIImage(named: models.imageName)
-        
+        backgroundColor = .white
+  
         addSubviews()
         
         setupTitleLabel()
+        setupView()
         setupDescriptionLabel()
         setupPriceLabel()
         setupImage()
@@ -70,6 +68,14 @@ private extension CustomView {
         [nameLabel, descriptionLabel, priceLabel, image].forEach { view in
             addSubview(view)
         }
+    }
+    
+    func setupView() {
+        layer.cornerRadius = 12
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+        layer.shadowRadius = 8
     }
     
     func setupTitleLabel() {
@@ -106,7 +112,7 @@ private extension CustomView {
             image.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             image.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             
-            nameLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: -8),
+            nameLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 8),
             nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
