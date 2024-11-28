@@ -10,7 +10,6 @@ import UIKit
 protocol IDataManager {
     func getModel() -> [Model]
     func findIndex(_ item: String) -> Param?
-    //func find(_ id: String, array: [Param]) -> Param?
 }
 
 class DataManager: IDataManager {
@@ -28,15 +27,6 @@ class DataManager: IDataManager {
             }
             return nil
         }
-    
-//    func find(_ id: String, array: [Param]) -> Param? {
-//        for model in array {
-//            if model.id == id {
-//                return model
-//            }
-//        }
-//        return nil
-//    }
     
 }
 

@@ -57,17 +57,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 self.present(detailsVC, animated: true)
             }
         }
-//        
-//        cell.action = { id in
-//
-//            if let foundItem = self.dataManager.find(id, array: allParams) {
-//                let detailsVC = DetailsVC()
-//                detailsVC.configure(model: foundItem)
-//                self.present(detailsVC, animated: true)
-//            }
-//        }
-        
-        
+
         cell.selectionStyle = .none
         cell.configure(models: modelElement)
         return cell
